@@ -1,14 +1,23 @@
+// In your server.js file
+
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
-//middleware
-app.use(cors());
+// Configure CORS more explicitly
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow your frontend origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type']
+}));
+
 app.use(express.json());
+
+// Rest of your code...
 
 //load recipe data
 const recipes = JSON.parse(fs.readFileSync(path.join(__dirname, 'data/recipes.json'), 'utf8'));
